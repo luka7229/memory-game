@@ -1,0 +1,49 @@
+body {
+    text-align: center;
+}
+
+.cell {
+    width: 64px;
+    height: 64px;
+}
+
+.cell {
+    border: #000000 1px solid;
+    width: 62px;
+    height: 62px;
+}
+
+.board {
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.board {
+    border: #000000 1px solid;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.toolbar {   
+    max-width: 240px;
+    padding: 0 0 10px 0;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.buttons button {
+    font-size: 100%;
+}
+
+#manual {
+    max-width: 260px;
+    padding-top: 10px;
+    margin: auto;
+    text-align: left;
+   
+}

@@ -1,0 +1,9 @@
+Assetts for Memory Game
+
+blank.png - empty cell
+cover.png - cover of the card
+0.png - card image
+1.png - card image
+2.png - card image
+3.png - card image
+4.png - card image
