@@ -1,12 +1,12 @@
 const elementResult = document.querySelector('#result') // <div id="result"></div>
 const boardWith = 5
 const boardHeight = 2
-const cellSize = 64 // withd/height of single cell in pixels
+const cellSize = 64 // width/height of single cell in pixels
 let turnCount = 0 // Count of user's turns
 let isGameOver = false // Game stops when true
 let twoLastCellsMatch = false // Result of comparing for 2 last rotated Cells
 let cellIndexPrev = null; // First rotated Cell
-let cellIndexNow = null; // Second roatated Cell
+let cellIndexNow = null; // Second rotated Cell
 
 // Images/Pictures to guess
 const imagesToGuess = [
@@ -28,12 +28,12 @@ let indexesOnBoard = [] // Indexes of Cells array without matched Cells
 
 generateBoard(); // Must called first
 
-// End of code, only fucntions below ------------------------------------------
+// End of code, only functions below ------------------------------------------
 
 /**
  * Updates content in <span id="turns">...</span>
  */
-function updateReuslt() {
+function updateResult() {
 //    Turns: <span id="turns" class="bold"></span>
     let textOutput = `Turn: ${turnCount}`
     if (isGameOver) {
@@ -57,7 +57,7 @@ function randomizeBoard() {
         imagesToCells.push(randomIndex)
     }
 
-    // Rundomize filled array
+    // Randomize filled array
     imagesToCells.sort(() => 0.5 - Math.random()) // Randomize by sorting
 }
 
@@ -86,7 +86,7 @@ function generateBoard() {
         // Set event
         div.addEventListener("click", handleCellClick);
       
-        // For Debuging, show all Cells
+        // For Debugging, show all Cells
         // toggleCell(div)
 
         // Add new div to Board and save in the Cells array
@@ -133,7 +133,7 @@ function toggleCell(div) {
 }
 
 /**
- * Toggles Cell to see the content and Toglge it back after some delay
+ * Toggles Cell to see the content and Toggles it back after some delay
  */
 function temporaryShowCell(div) {    
     // Show Cell
@@ -185,7 +185,7 @@ function showAndRemoveMatchedCells(index1, index2) {
             indexesOnBoard = indexesOnBoard.filter((item) => item != index1 && item != index2);
 
             isGameOver = Boolean(indexesOnBoard.length < 1)
-            updateReuslt();
+            updateResult();
         } else {
             // Cells are different, turn them back
             hideCell(cell1)
@@ -204,7 +204,7 @@ function showAndRemoveMatchedCells(index1, index2) {
  */
 function handleCellClick(event) {
     if (isGameOver) {
-        updateReuslt()
+        updateResult()
         return
     }
 
@@ -224,6 +224,6 @@ function handleCellClick(event) {
  
     // Update turn count
     turnCount = turnCount + 1
-    updateReuslt()
+    updateResult()
 }
 
