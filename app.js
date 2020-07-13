@@ -111,9 +111,13 @@ function showCell(div) {
  * Sets the cover image for given div
  */
 function hideCell(div) {
-    if (div.style.backgroundImage && String(div.style.backgroundImage).includes(IMG_BLANK) ) {
-        return // Cell is already removed
+    // Verify is cell already removed
+    const index = +div.getAttribute('data-index')
+    if (!indexesOnBoard.includes(index)) {
+        // console.log('hideCell() - no need to hide, index:', index, indexesOnBoard)
+        return // Cell is already removed   
     }
+
     // Set the Cover image as background
     div.style.backgroundImage = `url('${IMG_COVER}')`
 }
@@ -151,11 +155,11 @@ function temporaryShowCell(div) {
 function showAndRemoveMatchedCells(index1, index2) {
 //    console.log(`showAndRemoveMatchedCells(${index1}, ${index2})`)
 
-    // Did we click the ame cell again?
+    // Did we click the same cell again?
     if (index1 == index2) {
         cellIndexPrev = cellIndexNow;
         cellIndexNow = null;
-        return false // Don't comapre same cells
+        return false // Don't compare same cells
     }
 
     // Find 1st Cell on Board
@@ -168,32 +172,35 @@ function showAndRemoveMatchedCells(index1, index2) {
     showCell(cell2)
     const indexOfImage2 = imagesToCells[index2];
 
-    // After delay remove/delete Cells
+    // Reset cache before timer
+    cellIndexPrev = null;
+    cellIndexNow = null;    
+
+    // Remove same Cells
+    if (indexOfImage1 == indexOfImage2) {
+        // Remove Click events
+        cell1.removeEventListener('click', handleCellClick)
+        cell2.removeEventListener('click', handleCellClick) 
+
+        // Remove index1 and index2 from indexesOnBoard
+        indexesOnBoard = indexesOnBoard.filter((item) => item != index1 && item != index2);
+    }
+
+    // After delay update images of Cells
     setTimeout(() => {
         if (indexOfImage1 == indexOfImage2) {
-            // Cells are equal, remove them
-
             // Set Blank images
             cell1.style.backgroundImage = `url('${IMG_BLANK}')`
             cell2.style.backgroundImage = `url('${IMG_BLANK}')`
-    
-            // Remove Click events
-            cell1.removeEventListener('click', handleCellClick)
-            cell2.removeEventListener('click', handleCellClick) 
 
-            // Remove index1 and index2 from indexesOnBoard
-            indexesOnBoard = indexesOnBoard.filter((item) => item != index1 && item != index2);
-
+            // Update the result indicator
             isGameOver = Boolean(indexesOnBoard.length < 1)
             updateResult();
         } else {
             // Cells are different, turn them back
             hideCell(cell1)
             hideCell(cell2)
-        }
- 
-        cellIndexPrev = null;
-        cellIndexNow = null;
+        } 
     }, 1000)
 
     return true
@@ -214,7 +221,7 @@ function handleCellClick(event) {
 
     // If cellIndexPrev exists, compare Cells
     if (cellIndexPrev) {
-        if (showAndRemoveMatchedCells(cellIndexNow, cellIndexPrev)) {
+        if (showAndRemoveMatchedCells(cellIndexPrev, cellIndexNow)) {
             return; // Nothing to do more. Cells will be flipped back or removed
         }
     }
