@@ -1,6 +1,6 @@
 # Memory Game
 
-Classic "Memory Game" built using Vanila JS  
+Classic "Memory Game" built using Vanilla JS  
 
 Online demo: https://lukosha.com/games/memory-game/
 
